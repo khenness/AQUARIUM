@@ -39,7 +39,7 @@ class Ball:
         self.size = 0
 
 
-def make_ball():
+def make_ball(x,y):
     """
     Function to make a new, random ball.
     """
@@ -50,12 +50,12 @@ def make_ball():
 
     # Starting position of the ball.
     # Take into account the ball size so we don't spawn on the edge.
-    ball.x = random.randrange(ball.size, SCREEN_WIDTH - ball.size)
-    ball.y = random.randrange(ball.size, SCREEN_HEIGHT - ball.size)
+    ball.x = x #random.randrange(ball.size, SCREEN_WIDTH - ball.size)
+    ball.y = y #random.randrange(ball.size, SCREEN_HEIGHT - ball.size)
 
     # Speed and direction of rectangle
-    ball.change_x = random.randrange(-2, 3)
-    ball.change_y = random.randrange(-2, 3)
+    ball.change_x = 0 #random.randrange(-2, 3)
+    ball.change_y = 0 #random.randrange(-2, 3)
 
     # Color
     ball.color = (random.randrange(256), random.randrange(256), random.randrange(256))
@@ -69,7 +69,7 @@ class MyGame(arcade.Window):
     def __init__(self):
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, "Kevin's Aquarium!")
         self.ball_list = []
-        ball = make_ball()
+        ball = make_ball(300,300)
         self.ball_list.append(ball)
         self.xpos = 0
         self.ypos = 0
@@ -114,26 +114,14 @@ class MyGame(arcade.Window):
 
             if ball.y > SCREEN_HEIGHT - ball.size:
                 ball.change_y *= -1
-    """
-    def on_mouse_motion(self, x, y, dx, dy):
-        
 
-        # Move the center of the player sprite to match the mouse x, y
-        #self.player_sprite.center_x = x
-        #self.player_sprite.center_y = y
-        output = "Mouse X Pos: {}".format(x)
-        print("hi")
-        arcade.draw_text(output, 10, 40, arcade.color.WHITE, 14)
-        output = "Mouse Y Pos: {}".format(y)
-        arcade.draw_text(output, 10, 60, arcade.color.WHITE, 14)
-    """
 
     def on_mouse_press(self, x, y, button, modifiers):
         """
         Called whenever the mouse button is clicked.
         """
 
-        ball = make_ball()
+        ball = make_ball(x,y)
         self.ball_list.append(ball)
 
     def on_mouse_motion(self, x, y, dx, dy):
