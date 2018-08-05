@@ -73,6 +73,9 @@ class MyGame(arcade.Window):
         self.ball_list.append(ball)
         self.xpos = 0
         self.ypos = 0
+        self.mouse_dx = 0
+        self.mouse_dy = 0
+        self.zoomLevel = 0
 
     def on_draw(self):
         """
@@ -92,6 +95,12 @@ class MyGame(arcade.Window):
         arcade.draw_text(output, 10, 40, arcade.color.WHITE, 14)
         output = "Mouse Y Pos: {}".format(self.ypos)
         arcade.draw_text(output, 10, 60, arcade.color.WHITE, 14)
+        output = "Mouse dx: {}".format(self.mouse_dx)
+        arcade.draw_text(output, 10, 80, arcade.color.WHITE, 14)
+        output = "Mouse dy: {}".format(self.mouse_dy)
+        arcade.draw_text(output, 10, 100, arcade.color.WHITE, 14)
+        output = "Zoom Level: {}".format(self.zoomLevel)
+        arcade.draw_text(output, 10, 120, arcade.color.WHITE, 14)
         #arcade.draw_text(output, 10, 40, arcade.color.WHITE, 14)
         #arcade.draw_text(output, 10, 60, arcade.color.WHITE, 14)
 
@@ -130,7 +139,8 @@ class MyGame(arcade.Window):
         """
         self.xpos = x
         self.ypos = y
-
+        self.mouse_dx = dx
+        self.mouse_dy = dy
 
 
 
