@@ -21,6 +21,8 @@ https://www.gamedev.net/forums/topic/594055-zooming-onto-an-arbitrary-point/
 
 import arcade
 import random
+import numpy as np
+
 
 # --- Set up the constants
 
@@ -48,12 +50,12 @@ def make_ball(x,y):
     ball = Ball()
 
     # Size of the ball
-    ball.size = random.randrange(10, 30)
+    ball.radius = random.randrange(10, 30)
 
     # Starting position of the ball.
     # Take into account the ball size so we don't spawn on the edge.
-    ball.x = x #random.randrange(ball.size, SCREEN_WIDTH - ball.size)
-    ball.y = y #random.randrange(ball.size, SCREEN_HEIGHT - ball.size)
+    ball.x = x #random.randrange(ball.radius, SCREEN_WIDTH - ball.radius)
+    ball.y = y #random.randrange(ball.radius, SCREEN_HEIGHT - ball.radius)
 
     # Speed and direction of rectangle
     ball.change_x = 0 #random.randrange(-2, 3)
@@ -63,6 +65,30 @@ def make_ball(x,y):
     ball.color = (random.randrange(256), random.randrange(256), random.randrange(256))
 
     return ball
+
+def translate(x, y, a, b):
+    # x and y are the point to be translated, a and b are the translations in the x direction and y direction
+    # video time 13.45
+    m1 = np.array([[1, 0, a],
+                   [0, 1, b],
+                   [0, 0, 1]])
+    m2 = np.array([[x],
+                   [y],
+                   [1]])
+
+    return (np.dot(m1, m2))
+
+
+def scale_point(x, y, s, t):
+    m1 = np.array([[s, 0, 0],
+                   [0, t, 0],
+                   [0, 0, 1]])
+    m2 = np.array([[x],
+                   [y],
+                   [1]])
+
+    return (np.dot(m1, m2))
+
 
 
 class MyGame(arcade.Window):
@@ -79,6 +105,9 @@ class MyGame(arcade.Window):
         self.mouse_dy = 0
         self.zoomLevel = 0
 
+
+
+
     def on_draw(self):
         """
         Render the screen.
@@ -88,7 +117,7 @@ class MyGame(arcade.Window):
         arcade.start_render()
 
         for ball in self.ball_list:
-            arcade.draw_circle_filled(ball.x, ball.y, ball.size, ball.color)
+            arcade.draw_circle_filled(ball.x, ball.y, ball.radius, ball.color)
 
         # Put the text on the screen.
         output = "Balls: {}".format(len(self.ball_list))
@@ -114,16 +143,16 @@ class MyGame(arcade.Window):
             ball.x += ball.change_x
             ball.y += ball.change_y
 
-            if ball.x < ball.size:
+            if ball.x < ball.radius:
                 ball.change_x *= -1
 
-            if ball.y < ball.size:
+            if ball.y < ball.radius:
                 ball.change_y *= -1
 
-            if ball.x > SCREEN_WIDTH - ball.size:
+            if ball.x > SCREEN_WIDTH - ball.radius:
                 ball.change_x *= -1
 
-            if ball.y > SCREEN_HEIGHT - ball.size:
+            if ball.y > SCREEN_HEIGHT - ball.radius:
                 ball.change_y *= -1
 
 
@@ -155,10 +184,10 @@ class MyGame(arcade.Window):
 
     def on_mouse_scroll(self, x: int, y: int, scroll_x: int, scroll_y: int):
         """ User moves the scroll wheel. """
-        if scroll_x != 0:
-            self.zoomLevel -= scroll_x
-        if scroll_y != 0:
-            self.zoomLevel += scroll_y
+        #if scroll_x != 0:
+        self.zoomLevel -= scroll_x
+        #if scroll_y != 0:
+        self.zoomLevel += scroll_y
 
     def on_key_release(self, key, modifiers):
         """
