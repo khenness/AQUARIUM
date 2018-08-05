@@ -59,7 +59,8 @@ def scale_point(x, y, s, t):
     return (np.dot(m1, m2))
 
 
-
+def compute_radius_image(radius,percentage):
+    pass
 
 def compute_point_image(x,y,m1):
     m2 = np.array([[x],
@@ -141,7 +142,7 @@ class MyGame(arcade.Window):
         self.ypos = 0
         self.mouse_dx = 0
         self.mouse_dy = 0
-        self.zoomPercentage = 100
+        self.zoomedInPercentage = 100
 
         self.my_matrix = [[1,0,0],
                              [0,1,0],
@@ -177,7 +178,7 @@ class MyGame(arcade.Window):
         arcade.draw_text(output, 10, 80, arcade.color.WHITE, 14)
         output = "Mouse dy: {}".format(self.mouse_dy)
         arcade.draw_text(output, 10, 100, arcade.color.WHITE, 14)
-        output = "Zoom Percentage: {}%".format(self.zoomPercentage)
+        output = "Zoomed In Percentage: {}%".format(self.zoomedInPercentage)
         arcade.draw_text(output, 10, 120, arcade.color.WHITE, 14)
         output = "my_matrix: \n{}".format(np.matrix((self.my_matrix)))
         arcade.draw_text(output, 10, 220, arcade.color.WHITE, 14)
@@ -231,17 +232,17 @@ class MyGame(arcade.Window):
         Called whenever a key is pressed.
         """
         if key == arcade.key.UP or arcade.M. MOUSE_BUTTON_LEFT: # key.:
-            self.zoomPercentage+=1
+            self.zoomedInPercentage+=1
         elif key == arcade.key.DOWN:
-            self.zoomPercentage-=1
+            self.zoomedInPercentage-=1
 
     def on_mouse_scroll(self, x: int, y: int, scroll_x: int, scroll_y: int):
         """ User moves the scroll wheel. """
-        #if self.zoomPercentage >= 10 :
-        self.zoomPercentage -= 10 * scroll_x
-        self.zoomPercentage += 10 * scroll_y
-
-        #if self.zoomPercentage <= 200:
+        #if self.zoomedInPercentage >= 10 :
+        self.zoomedInPercentage -= 10 * scroll_x
+        self.zoomedInPercentage += 10 * scroll_y
+        #todo make max and min percenrtages work
+        #if self.zoomedInPercentage <= 200:
 
 
     def on_key_release(self, key, modifiers):
