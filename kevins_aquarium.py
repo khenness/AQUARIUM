@@ -15,6 +15,8 @@ python -m arcade.examples.bouncing_balls
 Zooming notes:
 https://www.gamedev.net/forums/topic/594055-zooming-onto-an-arbitrary-point/
 
+2d transformations lecture: https://www.youtube.com/watch?v=DD70ZIDjL7g
+
 """
 
 import arcade
