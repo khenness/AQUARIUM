@@ -31,6 +31,46 @@ SCREEN_WIDTH = 600
 SCREEN_HEIGHT = 600
 
 
+def compute_radius_image(radius, zoomvalue):
+    pass
+
+
+def translate(x, y, a, b):
+    # x and y are the point to be translated, a and b are the translations in the x direction and y direction
+    # video time 13.45
+    m1 = np.array([[1, 0, a],
+                   [0, 1, b],
+                   [0, 0, 1]])
+    m2 = np.array([[x],
+                   [y],
+                   [1]])
+
+    return (np.dot(m1, m2))
+
+
+def scale_point(x, y, s, t):
+    m1 = np.array([[s, 0, 0],
+                   [0, t, 0],
+                   [0, 0, 1]])
+    m2 = np.array([[x],
+                   [y],
+                   [1]])
+
+    return (np.dot(m1, m2))
+
+
+
+
+def compute_point_image(x,y,m1):
+    m2 = np.array([[x],
+                   [y],
+                   [1]])
+    return (np.dot(m1, m2))
+
+
+
+
+
 class Ball:
     """
     Class to keep track of a ball's location and vector.
@@ -48,7 +88,7 @@ class Ball:
 
         self.change_x = 0
         self.change_y = 0
-        self.size = 0
+        self.radius = 0
 
     def get_x_image(self):
         #todo multiply x by my_matrix
@@ -81,28 +121,7 @@ def make_ball(x,y):
 
     return ball
 
-def translate(x, y, a, b):
-    # x and y are the point to be translated, a and b are the translations in the x direction and y direction
-    # video time 13.45
-    m1 = np.array([[1, 0, a],
-                   [0, 1, b],
-                   [0, 0, 1]])
-    m2 = np.array([[x],
-                   [y],
-                   [1]])
 
-    return (np.dot(m1, m2))
-
-
-def scale_point(x, y, s, t):
-    m1 = np.array([[s, 0, 0],
-                   [0, t, 0],
-                   [0, 0, 1]])
-    m2 = np.array([[x],
-                   [y],
-                   [1]])
-
-    return (np.dot(m1, m2))
 
 def get_2d_matrix_string(m):
     returnVal = ""
@@ -143,7 +162,9 @@ class MyGame(arcade.Window):
         arcade.start_render()
 
         for ball in self.ball_list:
-            arcade.draw_circle_filled(ball.x, ball.y, ball.radius, ball.color)
+            myTuple = compute_point_image(ball.x, ball.y, self.my_matrix)
+
+            arcade.draw_circle_filled(myTuple[0], myTuple[1], ball.radius, ball.color)
 
         # Put the text on the screen.
         output = "Balls: {}".format(len(self.ball_list))
