@@ -10,6 +10,11 @@ Spawn a new ball for each mouse-click.
 
 If Python and Arcade are installed, this example can be run from the command line with:
 python -m arcade.examples.bouncing_balls
+
+
+Zooming notes:
+https://www.gamedev.net/forums/topic/594055-zooming-onto-an-arbitrary-point/
+
 """
 
 import arcade
@@ -66,6 +71,8 @@ class MyGame(arcade.Window):
         self.ball_list = []
         ball = make_ball()
         self.ball_list.append(ball)
+        self.xpos = 0
+        self.ypos = 0
 
     def on_draw(self):
         """
@@ -81,6 +88,14 @@ class MyGame(arcade.Window):
         # Put the text on the screen.
         output = "Balls: {}".format(len(self.ball_list))
         arcade.draw_text(output, 10, 20, arcade.color.WHITE, 14)
+        output = "Mouse X Pos: {}".format(self.xpos)
+        arcade.draw_text(output, 10, 40, arcade.color.WHITE, 14)
+        output = "Mouse Y Pos: {}".format(self.ypos)
+        arcade.draw_text(output, 10, 60, arcade.color.WHITE, 14)
+        #arcade.draw_text(output, 10, 40, arcade.color.WHITE, 14)
+        #arcade.draw_text(output, 10, 60, arcade.color.WHITE, 14)
+
+
 
     def update(self, delta_time):
         """ Movement and game logic """
@@ -99,13 +114,36 @@ class MyGame(arcade.Window):
 
             if ball.y > SCREEN_HEIGHT - ball.size:
                 ball.change_y *= -1
+    """
+    def on_mouse_motion(self, x, y, dx, dy):
+        
+
+        # Move the center of the player sprite to match the mouse x, y
+        #self.player_sprite.center_x = x
+        #self.player_sprite.center_y = y
+        output = "Mouse X Pos: {}".format(x)
+        print("hi")
+        arcade.draw_text(output, 10, 40, arcade.color.WHITE, 14)
+        output = "Mouse Y Pos: {}".format(y)
+        arcade.draw_text(output, 10, 60, arcade.color.WHITE, 14)
+    """
 
     def on_mouse_press(self, x, y, button, modifiers):
         """
         Called whenever the mouse button is clicked.
         """
+
         ball = make_ball()
         self.ball_list.append(ball)
+
+    def on_mouse_motion(self, x, y, dx, dy):
+        """
+        Called whenever the mouse moves.
+        """
+        self.xpos = x
+        self.ypos = y
+
+
 
 
 def main():
