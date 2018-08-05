@@ -38,10 +38,25 @@ class Ball:
     def __init__(self):
         self.x = 0
         self.y = 0
+
+        combo_matrix = []
+
+
+        self.world_x = 0
+        self.world_y = 0
+
+
         self.change_x = 0
         self.change_y = 0
         self.size = 0
 
+    def get_x_image(self):
+        #todo multiply x by combo_matrix
+        return self.x
+
+    def get_y_image(self):
+        #todo multiply y by combo_matrix
+        return self.x
 
 def make_ball(x,y):
     """
@@ -104,6 +119,10 @@ class MyGame(arcade.Window):
         self.mouse_dx = 0
         self.mouse_dy = 0
         self.zoomLevel = 0
+
+        self.combo_matrix = [[1,0,0],
+                             [0,1,0],
+                             [0,0,1]]
 
 
 
