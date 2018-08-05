@@ -49,3 +49,20 @@ def translate(x,y, a,b):
 
 
 print("translate(2,6,4,-3) =\n"+str(translate(2,6,4,-3)))
+
+
+def scale_point(x,y, s,t):
+    m1 = np.array([[s, 0, 0],
+                   [0, t, 0],
+                   [0, 0, 1]])
+    m2 = np.array([[x],
+                   [y],
+                   [1]])
+
+    return(np.dot(m1, m2))
+
+print("scale_point(2,6,2,0.5) =\n"+str(scale_point(2,6,2,0.5)))
+print("scale_point(6,8,2,0.5) =\n"+str(scale_point(6,8,2,0.5)))
+
+
+#def scale_line():
