@@ -190,6 +190,8 @@ class MyGame(arcade.Window):
 
     def update(self, delta_time):
         """ Movement and game logic """
+
+
         for ball in self.ball_list:
             ball.x += ball.change_x
             ball.y += ball.change_y
