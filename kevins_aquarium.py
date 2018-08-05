@@ -144,6 +144,32 @@ class MyGame(arcade.Window):
         self.mouse_dx = dx
         self.mouse_dy = dy
 
+    def on_key_press(self, key, modifiers):
+        """
+        Called whenever a key is pressed.
+        """
+        if key == arcade.key.UP or arcade.M. MOUSE_BUTTON_LEFT: # key.:
+            self.zoomLevel+=1
+        elif key == arcade.key.DOWN:
+            self.zoomLevel-=1
+
+    def on_mouse_scroll(self, x: int, y: int, scroll_x: int, scroll_y: int):
+        """ User moves the scroll wheel. """
+        if scroll_x != 0:
+            self.zoomLevel -= scroll_x
+        if scroll_y != 0:
+            self.zoomLevel += scroll_y
+
+    def on_key_release(self, key, modifiers):
+        """
+        Called when the user releases a key.
+        """
+        #if key == arcade.key.UP or key == arcade.key.DOWN:
+        #    self.player.delta_y = 0
+        #elif key == arcade.key.LEFT or key == arcade.key.RIGHT:
+        #    self.player.delta_x = 0
+
+
 
 
 def main():
