@@ -39,7 +39,7 @@ class Ball:
         self.x = 0
         self.y = 0
 
-        combo_matrix = []
+        my_matrix = []
 
 
         self.world_x = 0
@@ -51,11 +51,11 @@ class Ball:
         self.size = 0
 
     def get_x_image(self):
-        #todo multiply x by combo_matrix
+        #todo multiply x by my_matrix
         return self.x
 
     def get_y_image(self):
-        #todo multiply y by combo_matrix
+        #todo multiply y by my_matrix
         return self.x
 
 def make_ball(x,y):
@@ -104,7 +104,11 @@ def scale_point(x, y, s, t):
 
     return (np.dot(m1, m2))
 
-
+def get_2d_matrix_string(m):
+    returnVal = ""
+    for i in range(len(m)):
+        returnVal.append(*m[i])
+    return returnVal
 
 class MyGame(arcade.Window):
     """ Main application class. """
@@ -120,9 +124,12 @@ class MyGame(arcade.Window):
         self.mouse_dy = 0
         self.zoomLevel = 0
 
-        self.combo_matrix = [[1,0,0],
+        self.my_matrix = [[1,0,0],
                              [0,1,0],
                              [0,0,1]]
+
+
+
 
 
 
@@ -151,6 +158,10 @@ class MyGame(arcade.Window):
         arcade.draw_text(output, 10, 100, arcade.color.WHITE, 14)
         output = "Zoom Level: {}".format(self.zoomLevel)
         arcade.draw_text(output, 10, 120, arcade.color.WHITE, 14)
+        output = "my_matrix: \n{}".format(np.matrix((self.my_matrix)))
+        arcade.draw_text(output, 10, 220, arcade.color.WHITE, 14)
+
+
         #arcade.draw_text(output, 10, 40, arcade.color.WHITE, 14)
         #arcade.draw_text(output, 10, 60, arcade.color.WHITE, 14)
 
