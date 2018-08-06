@@ -270,35 +270,39 @@ class MyGame(arcade.Window):
         self.mouse_scroll_x = scroll_x
         self.mouse_scroll_y = scroll_y
 
-        if self.ZoomInPercentage == 10:
-            pass
+         #(round(scroll_y * 10, 1))
 
-        elif self.ZoomInPercentage == 300:
-            pass
+        scrollAmount = (self.mouse_scroll_y * 10)
+
+
+
+        if self.ZoomInPercentage < 10:
+            #if scrollAmount == 0:
+            #    pass
+            #elif scrollAmount < 0:
+
+            #else:
+
+            #self.ZoomInPercentage = 0
+            self.ZoomInPercentage += (scrollAmount* -1)
 
         else:
-            self.ZoomInPercentage += (round(scroll_y * 10, 1))
-            self.ZoomInPercentage += (round(scroll_x * 10, 1))
+            self.ZoomInPercentage += scrollAmount
 
 
 
-        #if self.ZoomInPercentage < 300:
-        #    pass
+        """
+        if self.ZoomInPercentage < 10 and scrollAmount > 0:
+            self.ZoomInPercentage += scrollAmount
+        elif self.ZoomInPercentage >= 300 and scrollAmount < 0:
+            self.ZoomInPercentage += scrollAmount
+        else:
+            self.ZoomInPercentage += scrollAmount
 
+        #   and scrollAmount > 300:
+        """
         #self.ZoomInPercentage += (round(scroll_y * 10, 1))
-        #self.ZoomInPercentage += (round(scroll_x * 10, 1))
 
-        """
-        if self.ZoomInPercentage < 1:
-            #self.ZoomInPercentage += round(round(scroll_x, 1) + 0.1 ,1)
-            self.ZoomInPercentage = round(self.ZoomInPercentage - 0.1, 1)
-            #self.ZoomInPercentage =   round(self.ZoomInPercentage + 0.1,1)  #round(round(scroll_y, 1) - 0.1, 1)
-            pass
-
-        else:
-            self.ZoomInPercentage += (round(scroll_x*10, 1))
-            self.ZoomInPercentage += (round(scroll_y*10, 1))
-        """
 
         #todo make max and min percenrtages work
         #if self.ZoomInPercentage <= 200:
