@@ -14,7 +14,7 @@ python -m arcade.examples.bouncing_balls
 
 Zooming notes:
 https://www.gamedev.net/forums/topic/594055-zooming-onto-an-arbitrary-point/
-
+https://stackoverflow.com/questions/2916081/zoom-in-on-a-point-using-scale-and-translate
 2d transformations lecture: https://www.youtube.com/watch?v=DD70ZIDjL7g
 
 """
@@ -146,12 +146,12 @@ class MyGame(arcade.Window):
         self.ball_list = []
         ball = make_ball(300,300)
         self.ball_list.append(ball)
-        self.xpos = 0
-        self.ypos = 0
+        self.mouse_x = 0
+        self.mouse_y = 0
         self.mouse_dx = 0
         self.mouse_dy = 0
-        self.ZoomFactor = 1
-
+        self.CurrentZoomScale = 1
+        self.OldZoomScale = 1
         self.my_matrix = [[1,0,0],
                              [0,1,0],
                              [0,0,1]]
@@ -178,18 +178,20 @@ class MyGame(arcade.Window):
         # Put the text on the screen.
         output = "Balls: {}".format(len(self.ball_list))
         arcade.draw_text(output, 10, 20, arcade.color.WHITE, 14)
-        output = "Mouse X Pos: {}".format(self.xpos)
+        output = "Mouse X Pos: {}".format(self.mouse_x)
         arcade.draw_text(output, 10, 40, arcade.color.WHITE, 14)
-        output = "Mouse Y Pos: {}".format(self.ypos)
+        output = "Mouse Y Pos: {}".format(self.mouse_y)
         arcade.draw_text(output, 10, 60, arcade.color.WHITE, 14)
         output = "Mouse dx: {}".format(self.mouse_dx)
         arcade.draw_text(output, 10, 80, arcade.color.WHITE, 14)
         output = "Mouse dy: {}".format(self.mouse_dy)
         arcade.draw_text(output, 10, 100, arcade.color.WHITE, 14)
-        output = "Zoom Factor: {}".format(self.ZoomFactor)
-        arcade.draw_text(output, 10, 120, arcade.color.WHITE, 14)
         output = "my_matrix: \n{}".format(np.matrix((self.my_matrix)))
+        arcade.draw_text(output, 10, 200, arcade.color.WHITE, 14)
+        output = "CurrentZoomScale: {}".format(self.CurrentZoomScale)
         arcade.draw_text(output, 10, 220, arcade.color.WHITE, 14)
+        output = "OldZoomScale: {}".format(self.OldZoomScale)
+        arcade.draw_text(output, 10, 240, arcade.color.WHITE, 14)
 
 
         #arcade.draw_text(output, 10, 40, arcade.color.WHITE, 14)
@@ -231,8 +233,8 @@ class MyGame(arcade.Window):
         """
         Called whenever the mouse moves.
         """
-        self.xpos = x
-        self.ypos = y
+        self.mouse_x = x
+        self.mouse_y = y
         self.mouse_dx = dx
         self.mouse_dy = dy
 
@@ -241,21 +243,33 @@ class MyGame(arcade.Window):
         Called whenever a key is pressed.
         """
         if key == arcade.key.UP or arcade.M. MOUSE_BUTTON_LEFT: # key.:
-            self.ZoomFactor+=1
+            self.CurrentZoomScale+=1
         elif key == arcade.key.DOWN:
-            self.ZoomFactor-=1
+            self.CurrentZoomScale-=1
 
     def on_mouse_scroll(self, x: int, y: int, scroll_x: int, scroll_y: int):
         """ User moves the scroll wheel. """
-        #if self.ZoomFactor >= 10 :
-        #if scroll_x != 0 or self.ZoomFactor > 10:
-        #    self.ZoomFactor -= 10 * scroll_x
+        #if self.CurrentZoomScale >= 10 :
+        #if scroll_x != 0 or self.CurrentZoomScale > 10:
+        #    self.CurrentZoomScale -= 10 * scroll_x
 
-        self.ZoomFactor += (0.1 * round(scroll_x,1))
-        self.ZoomFactor += (0.1 * round(scroll_y,1))
+        oldscale = self.OldZoomScale
+
+        self.CurrentZoomScale += (0.1 * round(scroll_x,1))
+        self.CurrentZoomScale += (0.1 * round(scroll_y,1))
         #todo make max and min percenrtages work
-        #if self.ZoomFactor <= 200:
-        self.my_matrix = scale_matrix(self.my_matrix, self.ZoomFactor, self.ZoomFactor)
+        #if self.CurrentZoomScale <= 200:
+        zoomPointX = self.mouse_x
+        zoomPointY = self.mouse_y
+
+        #scalechange = newscale - oldscale
+        offsetX = -(zoomPointX * scalechange)
+        offsetY = -(zoomPointY * scalechange)
+        
+        #self.my_matrix = scale_matrix(self.my_matrix, self.CurrentZoomScale, self.CurrentZoomScale)
+
+        
+        
 
     def on_key_release(self, key, modifiers):
         """
