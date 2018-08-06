@@ -16,7 +16,9 @@ Zooming notes:
 https://www.gamedev.net/forums/topic/594055-zooming-onto-an-arbitrary-point/
 https://stackoverflow.com/questions/2916081/zoom-in-on-a-point-using-scale-and-translate
 2d transformations lecture: https://www.youtube.com/watch?v=DD70ZIDjL7g
+#https://stackoverflow.com/questions/2916081/zoom-in-on-a-point-using-scale-and-translate
 
+JS example http://next.plnkr.co/edit/3aqsWHPLlSXJ9JCcJzgH?p=preview&utm_source=legacy&utm_medium=worker&utm_campaign=next&preview
 """
 
 import arcade
@@ -150,8 +152,8 @@ class MyGame(arcade.Window):
         self.mouse_y = 0
         self.mouse_dx = 0
         self.mouse_dy = 0
-        self.NewZoomScale = 1
-        self.CurrentZoomScale = 1
+        self.NewZoomScale = 100
+        self.CurrentZoomScale = 100
         self.my_matrix = [[1,0,0],
                              [0,1,0],
                              [0,0,1]]
@@ -220,6 +222,9 @@ class MyGame(arcade.Window):
                 ball.change_y *= -1
 
 
+            pass
+
+
 
     def on_mouse_press(self, x, y, button, modifiers):
         """
@@ -255,8 +260,8 @@ class MyGame(arcade.Window):
 
         self.CurrentZoomScale
 
-        self.NewZoomScale += (0.1 * round(scroll_x,1))
-        self.NewZoomScale += (0.1 * round(scroll_y,1))
+        self.NewZoomScale += (25*round(scroll_x,1))
+        self.NewZoomScale += (25*round(scroll_y,1))
         #todo make max and min percenrtages work
         #if self.NewZoomScale <= 200:
         zoomPointX = self.mouse_x
