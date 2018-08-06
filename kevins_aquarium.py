@@ -280,7 +280,7 @@ class MyGame(arcade.Window):
             else:
                 self.ZoomInPercentage += scrollAmount
         else:
-            if self.ZoomInPercentage == 500:
+            if self.ZoomInPercentage == 300:
                 pass
             else:
                 self.ZoomInPercentage += scrollAmount
