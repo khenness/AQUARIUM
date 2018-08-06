@@ -171,9 +171,9 @@ class MyGame(arcade.Window):
         self.ZoomPointY = 0
         #self.CurrentZoomInPercentage = 100
 
-        self.my_matrix = [[1,0,0],
+        self.my_matrix = np.array([[1,0,0],
                              [0,1,0],
-                             [0,0,1]]
+                             [0,0,1]])
 
 
 
@@ -190,14 +190,14 @@ class MyGame(arcade.Window):
         FirstNewX, FirstNewY = translate(x,y,0,0)
 
         #scale by zoom factor
-        SecondNewX, SecondNewY = scale_point(FirstNewX, FirstNewY,1,1)
+        SecondNewX, SecondNewY = scale_point(FirstNewX, FirstNewY,self.ZoomPointX,self.ZoomPointY)
 
         #translate back
         ThirdNewX, ThirdNewY = translate(SecondNewX,SecondNewY,saved_X,saved_Y)
 
 
         #return ThirdNewX, ThirdNewY
-        return FirstNewX, FirstNewY
+        return ThirdNewX, ThirdNewY
 
     def on_draw(self):
         """
@@ -208,9 +208,14 @@ class MyGame(arcade.Window):
         arcade.start_render()
 
         for ball in self.ball_list:
-            #myTuple = compute_point_image(ball.x, ball.y, self.my_matrix)
+            myTuple = compute_point_image(ball.x, ball.y, self.my_matrix)
+            newX = myTuple[0]
+            newY = myTuple[1]
+
             #newX,newY,newRadius = ball.compute_image()
-            newX,newY = self.get_point_image(ball.x,ball.y)
+
+
+            #newX,newY = self.get_point_image(ball.x,ball.y)
 
             arcade.draw_circle_filled(newX, newY, ball.radius, ball.color)
 
@@ -225,8 +230,8 @@ class MyGame(arcade.Window):
         arcade.draw_text(output, 10, 80, arcade.color.WHITE, 14)
         output = "Mouse dy: {}".format(self.mouse_dy)
         arcade.draw_text(output, 10, 100, arcade.color.WHITE, 14)
-        #output = "my_matrix: \n{}".format(np.matrix((self.my_matrix)))
-        #arcade.draw_text(output, 10, 200, arcade.color.WHITE, 14)
+        output = "my_matrix: \n{}".format(np.matrix((self.my_matrix)))
+        arcade.draw_text(output, 10, 200, arcade.color.WHITE, 14)
         output = "ZoomInPercentage: {}".format(self.ZoomInPercentage)
         arcade.draw_text(output, 10, 220, arcade.color.WHITE, 14)
         output = "mouse_scroll_x: {}".format(self.mouse_scroll_x)
@@ -267,7 +272,8 @@ class MyGame(arcade.Window):
                 ball.change_y *= -1
 
 
-            pass
+            self.my_matrix = np.dot(self.my_matrix,self.my_matrix)
+            self.my_matrix np.dot(self.my_matrix)
 
 
 
