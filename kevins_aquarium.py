@@ -46,8 +46,12 @@ def translate(x, y, a, b):
     m2 = np.array([[x],
                    [y],
                    [1]])
+    result_matrix = np.dot(m1, m2)
 
-    return (np.dot(m1, m2))
+    resultX = result_matrix[0][0]
+    resultY = result_matrix[0][1]
+
+    return (resultX, resultY)
 
 
 def scale_point(x, y, s, t):
@@ -58,7 +62,15 @@ def scale_point(x, y, s, t):
                    [y],
                    [1]])
 
-    return (np.dot(m1, m2))
+    result_matrix = np.dot(m1, m2)
+
+    resultX = result_matrix[0][0]
+    resultY = result_matrix[0][1]
+
+    return (resultX, resultY)
+
+
+
 
 
 def scale_matrix(m1,s,t):
@@ -101,13 +113,11 @@ class Ball:
         self.change_y = 0
         self.radius = 0
 
-    def get_x_image(self):
-        #todo multiply x by my_matrix
-        return self.x
-
-    def get_y_image(self):
-        #todo multiply y by my_matrix
-        return self.x
+    def compute_image(self):
+        #translate to origin
+        #scale point
+        #translate back
+        return (self.x, self.y, self.radius)
 
 def make_ball(x,y):
     """
@@ -164,7 +174,25 @@ class MyGame(arcade.Window):
 
 
 
+    def get_point_image(self,x,y):
+        #gTransform the passed in point based on the current game state
 
+
+
+        saved_X = x
+        saved_Y = y
+
+        #translate to origin
+        FirstNewX, FirstNewY = translate(x,y,0,0)
+
+        #scale by zoom factor
+        SecondNewX, SecondNewY = scale_point(FirstNewX, FirstNewY,1,1)
+
+        #translate back
+        ThirdNewX, ThirdNewY = translate(SecondNewX,SecondNewY,saved_X,saved_Y)
+
+
+        return ThirdNewX, ThirdNewY
 
 
     def on_draw(self):
@@ -176,9 +204,9 @@ class MyGame(arcade.Window):
         arcade.start_render()
 
         for ball in self.ball_list:
-            myTuple = compute_point_image(ball.x, ball.y, self.my_matrix)
-
-            arcade.draw_circle_filled(myTuple[0], myTuple[1], ball.radius, ball.color)
+            #myTuple = compute_point_image(ball.x, ball.y, self.my_matrix)
+            newX,newY,newRadius = ball.compute_image()
+            arcade.draw_circle_filled(newX, newY, newRadius, ball.color)
 
         # Put the text on the screen.
         output = "Balls: {}".format(len(self.ball_list))
