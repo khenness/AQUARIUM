@@ -150,7 +150,7 @@ class MyGame(arcade.Window):
         self.ypos = 0
         self.mouse_dx = 0
         self.mouse_dy = 0
-        self.zoomedInPercentage = 100
+        self.ZoomFactor = 1
 
         self.my_matrix = [[1,0,0],
                              [0,1,0],
@@ -186,7 +186,7 @@ class MyGame(arcade.Window):
         arcade.draw_text(output, 10, 80, arcade.color.WHITE, 14)
         output = "Mouse dy: {}".format(self.mouse_dy)
         arcade.draw_text(output, 10, 100, arcade.color.WHITE, 14)
-        output = "Zoomed In Percentage: {}%".format(self.zoomedInPercentage)
+        output = "Zoomed In Percentage: {}%".format(self.ZoomFactor)
         arcade.draw_text(output, 10, 120, arcade.color.WHITE, 14)
         output = "my_matrix: \n{}".format(np.matrix((self.my_matrix)))
         arcade.draw_text(output, 10, 220, arcade.color.WHITE, 14)
@@ -241,21 +241,21 @@ class MyGame(arcade.Window):
         Called whenever a key is pressed.
         """
         if key == arcade.key.UP or arcade.M. MOUSE_BUTTON_LEFT: # key.:
-            self.zoomedInPercentage+=1
+            self.ZoomFactor+=1
         elif key == arcade.key.DOWN:
-            self.zoomedInPercentage-=1
+            self.ZoomFactor-=1
 
     def on_mouse_scroll(self, x: int, y: int, scroll_x: int, scroll_y: int):
         """ User moves the scroll wheel. """
-        #if self.zoomedInPercentage >= 10 :
-        #if scroll_x != 0 or self.zoomedInPercentage > 10:
-        #    self.zoomedInPercentage -= 10 * scroll_x
+        #if self.ZoomFactor >= 10 :
+        #if scroll_x != 0 or self.ZoomFactor > 10:
+        #    self.ZoomFactor -= 10 * scroll_x
 
-        self.zoomedInPercentage -= 10 * scroll_x
-        self.zoomedInPercentage += 10 * scroll_y
+        self.ZoomFactor -= (0.1 * scroll_x)
+        self.ZoomFactor += (0.1 * scroll_y)
         #todo make max and min percenrtages work
-        #if self.zoomedInPercentage <= 200:
-        self.my_matrix = scale_matrix(self.my_matrix, self.zoomedInPercentage, self.zoomedInPercentage)
+        #if self.ZoomFactor <= 200:
+        self.my_matrix = scale_matrix(self.my_matrix, self.ZoomFactor, self.ZoomFactor)
 
     def on_key_release(self, key, modifiers):
         """
