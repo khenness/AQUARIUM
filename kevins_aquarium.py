@@ -191,8 +191,8 @@ class MyGame(arcade.Window):
         arcade.draw_text(output, 10, 80, arcade.color.WHITE, 14)
         output = "Mouse dy: {}".format(self.mouse_dy)
         arcade.draw_text(output, 10, 100, arcade.color.WHITE, 14)
-        output = "my_matrix: \n{}".format(np.matrix((self.my_matrix)))
-        arcade.draw_text(output, 10, 200, arcade.color.WHITE, 14)
+        #output = "my_matrix: \n{}".format(np.matrix((self.my_matrix)))
+        #arcade.draw_text(output, 10, 200, arcade.color.WHITE, 14)
         output = "ZoomInPercentage: {}".format(self.ZoomInPercentage)
         arcade.draw_text(output, 10, 220, arcade.color.WHITE, 14)
         output = "mouse_scroll_x: {}".format(self.mouse_scroll_x)
@@ -286,6 +286,9 @@ class MyGame(arcade.Window):
                 self.ZoomInPercentage += scrollAmount
 
 
+        scaleValue = round(self.ZoomInPercentage / 100,1)
+
+        #self.my_matrix = scale_matrix(self.my_matrix, scaleValue, scaleValue)
 
 
         """
