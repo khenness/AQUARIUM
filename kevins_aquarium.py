@@ -152,8 +152,9 @@ class MyGame(arcade.Window):
         self.mouse_y = 0
         self.mouse_dx = 0
         self.mouse_dy = 0
-        self.NewZoomScale = 100
-        self.CurrentZoomScale = 100
+        self.ZoomScale = 1
+        #self.CurrentZoomScale = 100
+
         self.my_matrix = [[1,0,0],
                              [0,1,0],
                              [0,0,1]]
@@ -190,10 +191,10 @@ class MyGame(arcade.Window):
         arcade.draw_text(output, 10, 100, arcade.color.WHITE, 14)
         output = "my_matrix: \n{}".format(np.matrix((self.my_matrix)))
         arcade.draw_text(output, 10, 200, arcade.color.WHITE, 14)
-        output = "NewZoomScale: {}".format(self.NewZoomScale)
+        output = "ZoomScale: {}".format(self.ZoomScale)
         arcade.draw_text(output, 10, 220, arcade.color.WHITE, 14)
-        output = "CurrentZoomScale: {}".format(self.CurrentZoomScale)
-        arcade.draw_text(output, 10, 240, arcade.color.WHITE, 14)
+        #output = "CurrentZoomScale: {}".format(self.CurrentZoomScale)
+        #arcade.draw_text(output, 10, 240, arcade.color.WHITE, 14)
 
 
         #arcade.draw_text(output, 10, 40, arcade.color.WHITE, 14)
@@ -248,30 +249,30 @@ class MyGame(arcade.Window):
         Called whenever a key is pressed.
         """
         if key == arcade.key.UP or arcade.M. MOUSE_BUTTON_LEFT: # key.:
-            self.NewZoomScale+=1
+            self.ZoomScale+=1
         elif key == arcade.key.DOWN:
-            self.NewZoomScale-=1
+            self.ZoomScale-=1
 
     def on_mouse_scroll(self, x: int, y: int, scroll_x: int, scroll_y: int):
         """ User moves the scroll wheel. """
-        #if self.NewZoomScale >= 10 :
-        #if scroll_x != 0 or self.NewZoomScale > 10:
-        #    self.NewZoomScale -= 10 * scroll_x
+        #if self.ZoomScale >= 10 :
+        #if scroll_x != 0 or self.ZoomScale > 10:
+        #    self.ZoomScale -= 10 * scroll_x
 
-        self.CurrentZoomScale
+        #self.CurrentZoomScale
 
-        self.NewZoomScale += (25*round(scroll_x,1))
-        self.NewZoomScale += (25*round(scroll_y,1))
+        self.ZoomScale += (round(scroll_x,1))
+        self.ZoomScale += (round(scroll_y,1))
         #todo make max and min percenrtages work
-        #if self.NewZoomScale <= 200:
+        #if self.ZoomScale <= 200:
         zoomPointX = self.mouse_x
         zoomPointY = self.mouse_y
 
         #scalechange = newscale - oldscale
-        offsetX = -(zoomPointX * scalechange)
-        offsetY = -(zoomPointY * scalechange)
+        #offsetX = -(zoomPointX * scalechange)
+        #offsetY = -(zoomPointY * scalechange)
         
-        #self.my_matrix = scale_matrix(self.my_matrix, self.NewZoomScale, self.NewZoomScale)
+        #self.my_matrix = scale_matrix(self.my_matrix, self.ZoomScale, self.ZoomScale)
 
         
         
