@@ -274,9 +274,34 @@ class MyGame(arcade.Window):
 
         scrollAmount = (self.mouse_scroll_y * 10)
 
+        if scrollAmount < 0:
+            if self.ZoomInPercentage == 10:
+                pass
+            else:
+                self.ZoomInPercentage += scrollAmount
+        else:
+            if self.ZoomInPercentage == 500:
+                pass
+            else:
+                self.ZoomInPercentage += scrollAmount
 
 
-        if self.ZoomInPercentage < 10:
+
+
+        """
+        if self.ZoomInPercentage >= 10:
+            
+            self.ZoomInPercentage += (scrollAmount* 1)
+
+        else:
+            if scrollAmount < 0:
+                self.ZoomInPercentage = 10
+
+            else:
+                self.ZoomInPercentage  = 10
+                self.ZoomInPercentage += (scrollAmount* 1)
+        """
+
             #if scrollAmount == 0:
             #    pass
             #elif scrollAmount < 0:
@@ -284,10 +309,10 @@ class MyGame(arcade.Window):
             #else:
 
             #self.ZoomInPercentage = 0
-            self.ZoomInPercentage += (scrollAmount* -1)
+            #self.ZoomInPercentage += (scrollAmount* -1)
 
-        else:
-            self.ZoomInPercentage += scrollAmount
+        #else:
+        #    self.ZoomInPercentage += scrollAmount
 
 
 
