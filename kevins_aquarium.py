@@ -49,7 +49,7 @@ def translate(x, y, a, b):
     result_matrix = np.dot(m1, m2)
 
     resultX = result_matrix[0][0]
-    resultY = result_matrix[0][1]
+    resultY = result_matrix[1][0]
 
     return (resultX, resultY)
 
@@ -65,7 +65,7 @@ def scale_point(x, y, s, t):
     result_matrix = np.dot(m1, m2)
 
     resultX = result_matrix[0][0]
-    resultY = result_matrix[0][1]
+    resultY = result_matrix[1][0]
 
     return (resultX, resultY)
 
@@ -165,6 +165,10 @@ class MyGame(arcade.Window):
         self.ZoomInPercentage = 100
         self.mouse_scroll_x = 0
         self.mouse_scroll_y = 0
+
+
+        self.ZoomPointX = 0
+        self.ZoomPointY = 0
         #self.CurrentZoomInPercentage = 100
 
         self.my_matrix = [[1,0,0],
@@ -192,8 +196,8 @@ class MyGame(arcade.Window):
         ThirdNewX, ThirdNewY = translate(SecondNewX,SecondNewY,saved_X,saved_Y)
 
 
-        return ThirdNewX, ThirdNewY
-
+        #return ThirdNewX, ThirdNewY
+        return FirstNewX, FirstNewY
 
     def on_draw(self):
         """
@@ -205,8 +209,10 @@ class MyGame(arcade.Window):
 
         for ball in self.ball_list:
             #myTuple = compute_point_image(ball.x, ball.y, self.my_matrix)
-            newX,newY,newRadius = ball.compute_image()
-            arcade.draw_circle_filled(newX, newY, newRadius, ball.color)
+            #newX,newY,newRadius = ball.compute_image()
+            newX,newY = self.get_point_image(ball.x,ball.y)
+
+            arcade.draw_circle_filled(newX, newY, ball.radius, ball.color)
 
         # Put the text on the screen.
         output = "Balls: {}".format(len(self.ball_list))
@@ -227,6 +233,10 @@ class MyGame(arcade.Window):
         arcade.draw_text(output, 10, 240, arcade.color.WHITE, 14)
         output = "mouse_scroll_y: {}".format(self.mouse_scroll_y)
         arcade.draw_text(output, 10, 260, arcade.color.WHITE, 14)
+        output = "ZoomPointX: {}".format(self.ZoomPointX)
+        arcade.draw_text(output, 10, 280, arcade.color.WHITE, 14)
+        output = "ZoomPointY: {}".format(self.ZoomPointY)
+        arcade.draw_text(output, 10, 300, arcade.color.WHITE, 14)
         #output = "CurrentZoomInPercentage: {}".format(self.CurrentZoomInPercentage)
         #arcade.draw_text(output, 10, 240, arcade.color.WHITE, 14)
 
@@ -297,6 +307,9 @@ class MyGame(arcade.Window):
 
         self.mouse_scroll_x = scroll_x
         self.mouse_scroll_y = scroll_y
+
+        self.ZoomPointX = x
+        self.ZoomPointY = y
 
          #(round(scroll_y * 10, 1))
 

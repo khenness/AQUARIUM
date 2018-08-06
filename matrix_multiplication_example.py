@@ -66,3 +66,23 @@ print("scale_point(6,8,2,0.5) =\n"+str(scale_point(6,8,2,0.5)))
 
 
 #def scale_line():
+
+def scale_point_v2(x, y, s, t):
+    m1 = np.array([[s, 0, 0],
+                   [0, t, 0],
+                   [0, 0, 1]])
+    m2 = np.array([[x],
+                   [y],
+                   [1]])
+
+    result_matrix = list(np.dot(m1, m2))
+    print("result matrix = ")
+    print(str(result_matrix))
+    resultX = result_matrix[0][0]
+    resultY = result_matrix[1][0]
+
+    return (resultX, resultY)
+
+
+
+print("scale_point_v2(2,6,2,0.5) =\n"+str(scale_point_v2(2,6,2,0.5)))
