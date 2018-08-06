@@ -59,6 +59,14 @@ def scale_point(x, y, s, t):
     return (np.dot(m1, m2))
 
 
+def scale_matrix(m1,s,t):
+    m2 = np.array([[s, 0, 0],
+                   [0, t, 0],
+                   [0, 0, 1]])
+    return (np.dot(m1, m2))
+
+
+
 def compute_radius_image(radius,percentage):
     pass
 
@@ -210,6 +218,7 @@ class MyGame(arcade.Window):
                 ball.change_y *= -1
 
 
+
     def on_mouse_press(self, x, y, button, modifiers):
         """
         Called whenever the mouse button is clicked.
@@ -239,11 +248,14 @@ class MyGame(arcade.Window):
     def on_mouse_scroll(self, x: int, y: int, scroll_x: int, scroll_y: int):
         """ User moves the scroll wheel. """
         #if self.zoomedInPercentage >= 10 :
+        #if scroll_x != 0 or self.zoomedInPercentage > 10:
+        #    self.zoomedInPercentage -= 10 * scroll_x
+
         self.zoomedInPercentage -= 10 * scroll_x
         self.zoomedInPercentage += 10 * scroll_y
         #todo make max and min percenrtages work
         #if self.zoomedInPercentage <= 200:
-
+        self.my_matrix = scale_matrix(self.my_matrix, self.zoomedInPercentage, self.zoomedInPercentage)
 
     def on_key_release(self, key, modifiers):
         """
