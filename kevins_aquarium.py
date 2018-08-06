@@ -152,8 +152,10 @@ class MyGame(arcade.Window):
         self.mouse_y = 0
         self.mouse_dx = 0
         self.mouse_dy = 0
-        self.ZoomScale = 1
-        #self.CurrentZoomScale = 100
+        self.ZoomInPercentage = 100
+        self.mouse_scroll_x = 0
+        self.mouse_scroll_y = 0
+        #self.CurrentZoomInPercentage = 100
 
         self.my_matrix = [[1,0,0],
                              [0,1,0],
@@ -191,9 +193,13 @@ class MyGame(arcade.Window):
         arcade.draw_text(output, 10, 100, arcade.color.WHITE, 14)
         output = "my_matrix: \n{}".format(np.matrix((self.my_matrix)))
         arcade.draw_text(output, 10, 200, arcade.color.WHITE, 14)
-        output = "ZoomScale: {}".format(self.ZoomScale)
+        output = "ZoomInPercentage: {}".format(self.ZoomInPercentage)
         arcade.draw_text(output, 10, 220, arcade.color.WHITE, 14)
-        #output = "CurrentZoomScale: {}".format(self.CurrentZoomScale)
+        output = "mouse_scroll_x: {}".format(self.mouse_scroll_x)
+        arcade.draw_text(output, 10, 240, arcade.color.WHITE, 14)
+        output = "mouse_scroll_y: {}".format(self.mouse_scroll_y)
+        arcade.draw_text(output, 10, 260, arcade.color.WHITE, 14)
+        #output = "CurrentZoomInPercentage: {}".format(self.CurrentZoomInPercentage)
         #arcade.draw_text(output, 10, 240, arcade.color.WHITE, 14)
 
 
@@ -249,22 +255,53 @@ class MyGame(arcade.Window):
         Called whenever a key is pressed.
         """
         if key == arcade.key.UP or arcade.M. MOUSE_BUTTON_LEFT: # key.:
-            self.ZoomScale+=1
+            self.ZoomInPercentage+=1
         elif key == arcade.key.DOWN:
-            self.ZoomScale-=1
+            self.ZoomInPercentage-=1
 
     def on_mouse_scroll(self, x: int, y: int, scroll_x: int, scroll_y: int):
         """ User moves the scroll wheel. """
-        #if self.ZoomScale >= 10 :
-        #if scroll_x != 0 or self.ZoomScale > 10:
-        #    self.ZoomScale -= 10 * scroll_x
+        #if self.ZoomInPercentage >= 10 :
+        #if scroll_x != 0 or self.ZoomInPercentage > 10:
+        #    self.ZoomInPercentage -= 10 * scroll_x
 
-        #self.CurrentZoomScale
+        #self.CurrentZoomInPercentage
 
-        self.ZoomScale += (round(scroll_x,1))
-        self.ZoomScale += (round(scroll_y,1))
+        self.mouse_scroll_x = scroll_x
+        self.mouse_scroll_y = scroll_y
+
+        if self.ZoomInPercentage == 10:
+            pass
+
+        elif self.ZoomInPercentage == 300:
+            pass
+
+        else:
+            self.ZoomInPercentage += (round(scroll_y * 10, 1))
+            self.ZoomInPercentage += (round(scroll_x * 10, 1))
+
+
+
+        #if self.ZoomInPercentage < 300:
+        #    pass
+
+        #self.ZoomInPercentage += (round(scroll_y * 10, 1))
+        #self.ZoomInPercentage += (round(scroll_x * 10, 1))
+
+        """
+        if self.ZoomInPercentage < 1:
+            #self.ZoomInPercentage += round(round(scroll_x, 1) + 0.1 ,1)
+            self.ZoomInPercentage = round(self.ZoomInPercentage - 0.1, 1)
+            #self.ZoomInPercentage =   round(self.ZoomInPercentage + 0.1,1)  #round(round(scroll_y, 1) - 0.1, 1)
+            pass
+
+        else:
+            self.ZoomInPercentage += (round(scroll_x*10, 1))
+            self.ZoomInPercentage += (round(scroll_y*10, 1))
+        """
+
         #todo make max and min percenrtages work
-        #if self.ZoomScale <= 200:
+        #if self.ZoomInPercentage <= 200:
         zoomPointX = self.mouse_x
         zoomPointY = self.mouse_y
 
@@ -272,7 +309,7 @@ class MyGame(arcade.Window):
         #offsetX = -(zoomPointX * scalechange)
         #offsetY = -(zoomPointY * scalechange)
         
-        #self.my_matrix = scale_matrix(self.my_matrix, self.ZoomScale, self.ZoomScale)
+        #self.my_matrix = scale_matrix(self.my_matrix, self.ZoomInPercentage, self.ZoomInPercentage)
 
         
         
