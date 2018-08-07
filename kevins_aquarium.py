@@ -273,7 +273,7 @@ class MyGame(arcade.Window):
 
 
             self.my_matrix = np.dot(self.my_matrix,self.my_matrix)
-            self.my_matrix np.dot(self.my_matrix)
+            #self.my_matrix np.dot(self.my_matrix)
 
 
 
